@@ -14,5 +14,8 @@
   "main": "index.js",
   "repository": "https://github.com/VictorGoic0/Sprint-Challenge-RDBMS.git",
   "author": "VictorGoic0 <vgoico000@citymail.cuny.edu>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "server": "nodemon"
+  }
 }
