@@ -31,8 +31,10 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const project = req.body;
-  if (!project.name) {
-    res.status(400).json({ message: "Please enter a valid project name." });
+  if (!project.name || !project.description) {
+    res
+      .status(400)
+      .json({ message: "Please enter a valid project name and description." });
   } else {
     try {
       const newProject = await db.create(project);
@@ -69,8 +71,10 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   const newProject = req.body;
 
-  if (!newProject.name) {
-    res.status(400).json({ message: "Please enter a valid project name." });
+  if (!newProject.name || !newProject.description) {
+    res
+      .status(400)
+      .json({ message: "Please enter a valid project name and description." });
   } else {
     try {
       const editedProject = await db.update(newProject, id);
