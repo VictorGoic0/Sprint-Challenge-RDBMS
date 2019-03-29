@@ -25,9 +25,39 @@ exports.up = function(knex, Promise) {
         .unique();
       table.string("notes", 256).notNullable();
       table.boolean("completed");
+    })
+    .createTable("contexts", table => {
+      table.increments();
+      table
+        .string("name", 128)
+        .notNullable()
+        .unique();
+    })
+    .createTable("action-context", table => {
+      table.increments();
+      table
+        .integer("action_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("actions")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+      table
+        .integer("context_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("actions")
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
     });
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists("actions").dropTableIfExists("projects");
+  return knex.schema
+    .dropTableIfExists("action-context")
+    .dropTableIfExists("contexts")
+    .dropTableIfExists("actions")
+    .dropTableIfExists("projects");
 };
