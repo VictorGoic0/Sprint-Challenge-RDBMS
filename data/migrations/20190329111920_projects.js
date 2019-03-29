@@ -33,7 +33,7 @@ exports.up = function(knex, Promise) {
         .notNullable()
         .unique();
     })
-    .createTable("action-context", table => {
+    .createTable("action_context", table => {
       table.increments();
       table
         .integer("action_id")
@@ -48,7 +48,7 @@ exports.up = function(knex, Promise) {
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("actions")
+        .inTable("contexts")
         .onDelete("CASCADE")
         .onUpdate("CASCADE");
     });
@@ -56,7 +56,7 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
   return knex.schema
-    .dropTableIfExists("action-context")
+    .dropTableIfExists("action_context")
     .dropTableIfExists("contexts")
     .dropTableIfExists("actions")
     .dropTableIfExists("projects");

@@ -22,6 +22,11 @@ async function findById(id) {
   const action = await db("actions")
     .where({ id })
     .first();
+  action.contexts = await db("actions")
+    .innerJoin("action_context", "action_context.action_id", "actions.id")
+    .innerJoin("contexts", "contexts.id", "action_context.context_id")
+    .where({ "action_context.action_id": id })
+    .pluck("contexts.name");
   action.completed === 1
     ? (action.completed = true)
     : (action.completed = false);
